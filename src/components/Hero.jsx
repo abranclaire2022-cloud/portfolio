@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useRef } from "react";
@@ -6,205 +7,251 @@ import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
 import portfolio from "@/data/portfolio";
 
+/* =========================================================
+   LYDIA PORTFOLIO — CYBER VIOLET
+   HERO — FINAL LAYOUT ADJUSTMENTS
+
+   - Texte mieux espacé
+   - Portrait rapproché de la colonne de gauche
+   - Taille du portrait inchangée
+   - Effets 3D et animations conservés
+   - Boutons visibles plus rapidement
+   - Informations secondaires simplifiées
+   - Cinq langues et RTL
+========================================================= */
+
 const content = {
   fr: {
+    eyebrow: "DÉVELOPPEUSE WEB FULL-STACK",
     greeting: "Bonjour, je suis",
-    ctaProjects: "Voir mes projets",
-    ctaContact: "Me contacter",
-    ctaCvOpen: "Voir mon CV",
-    ctaCvDownload: "Télécharger mon CV",
-    stack: "Stack principale",
-    location: "Localisation",
-    orbitLabel: "DÉVELOPPEUSE WEB FULL-STACK",
+    headline:
+      "Je conçois des applications web modernes, fonctionnelles et intuitives.",
+    description:
+      "Du front-end au back-end, j'associe développement web et sens du design pour créer des expériences numériques adaptées aux besoins des utilisateurs.",
+    projects: "Voir mes projets",
+    downloadCV: "Télécharger mon CV",
+    viewCV: "Consulter le CV",
+    linkedin: "Mon LinkedIn",
+    location: "LOCALISATION",
+    orbit: "DÉVELOPPEUSE WEB FULL-STACK",
   },
 
   en: {
+    eyebrow: "FULL-STACK WEB DEVELOPER",
     greeting: "Hi, I'm",
-    ctaProjects: "View my projects",
-    ctaContact: "Get in touch",
-    ctaCvOpen: "View my CV (FR)",
-    ctaCvDownload: "Download my CV (FR)",
-    stack: "Core stack",
-    location: "Location",
-    orbitLabel: "FULL-STACK WEB DEVELOPER",
+    headline:
+      "I build modern, functional and intuitive web applications.",
+    description:
+      "From front-end to back-end, I combine web development and design thinking to create digital experiences tailored to users' needs.",
+    projects: "View my projects",
+    downloadCV: "Download my CV (FR)",
+    viewCV: "View CV (FR)",
+    linkedin: "My LinkedIn",
+    location: "LOCATION",
+    orbit: "FULL-STACK WEB DEVELOPER",
   },
 
   "pt-BR": {
+    eyebrow: "DESENVOLVEDORA WEB FULL-STACK",
     greeting: "Olá, eu sou",
-    ctaProjects: "Ver meus projetos",
-    ctaContact: "Entrar em contato",
-    ctaCvOpen: "Ver meu CV (FR)",
-    ctaCvDownload: "Baixar meu CV (FR)",
-    stack: "Stack principal",
-    location: "Localização",
-    orbitLabel: "DESENVOLVEDORA WEB FULL-STACK",
+    headline:
+      "Desenvolvo aplicações web modernas, funcionais e intuitivas.",
+    description:
+      "Do front-end ao back-end, combino desenvolvimento web e design para criar experiências digitais adaptadas às necessidades dos usuários.",
+    projects: "Ver meus projetos",
+    downloadCV: "Baixar meu CV (FR)",
+    viewCV: "Visualizar CV (FR)",
+    linkedin: "Meu LinkedIn",
+    location: "LOCALIZAÇÃO",
+    orbit: "DESENVOLVEDORA WEB FULL-STACK",
   },
 
   ja: {
+    eyebrow: "フルスタックWEB開発者",
     greeting: "こんにちは、",
-    ctaProjects: "プロジェクトを見る",
-    ctaContact: "お問い合わせ",
-    ctaCvOpen: "履歴書を見る（フランス語）",
-    ctaCvDownload: "履歴書をダウンロード（フランス語）",
-    stack: "主要スタック",
+    headline:
+      "モダンで使いやすく、機能的なWebアプリケーションを開発しています。",
+    description:
+      "フロントエンドからバックエンドまで、Web開発とデザインの視点を組み合わせ、ユーザーのニーズに合ったデジタル体験を提供します。",
+    projects: "プロジェクトを見る",
+    downloadCV: "履歴書をダウンロード（仏語）",
+    viewCV: "履歴書を見る（仏語）",
+    linkedin: "LinkedIn",
     location: "所在地",
-    orbitLabel: "フルスタックWEB開発者",
+    orbit: "フルスタックWEB開発者",
   },
 
   ar: {
+    eyebrow: "مطوّرة ويب متكاملة",
     greeting: "مرحبًا، أنا",
-    ctaProjects: "عرض مشاريعي",
-    ctaContact: "تواصل معي",
-    ctaCvOpen: "عرض سيرتي الذاتية (بالفرنسية)",
-    ctaCvDownload: "تحميل سيرتي الذاتية (بالفرنسية)",
-    stack: "التقنيات الأساسية",
+    headline:
+      "أطوّر تطبيقات ويب حديثة وعملية وسهلة الاستخدام.",
+    description:
+      "من الواجهة الأمامية إلى الخلفية، أجمع بين تطوير الويب وحس التصميم لإنشاء تجارب رقمية تلبي احتياجات المستخدمين.",
+    projects: "عرض مشاريعي",
+    downloadCV: "تحميل السيرة الذاتية (بالفرنسية)",
+    viewCV: "عرض السيرة الذاتية (بالفرنسية)",
+    linkedin: "LinkedIn",
     location: "الموقع",
-    orbitLabel: "مطورة ويب متكاملة",
+    orbit: "مطوّرة ويب متكاملة",
   },
 };
 
+/* =========================================================
+   UTILITAIRES
+========================================================= */
+
+function translate(value, language, fallback = "") {
+  if (typeof value === "string") {
+    return value;
+  }
+
+  return value?.[language] ?? value?.fr ?? fallback;
+}
+
+function ArrowIcon({ diagonal = false, isRTL = false }) {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      {diagonal ? (
+        <>
+          <path d="M7 17 17 7" />
+          <path d="M8 7h9v9" />
+        </>
+      ) : isRTL ? (
+        <>
+          <path d="M19 12H5" />
+          <path d="m12 5-7 7 7 7" />
+        </>
+      ) : (
+        <>
+          <path d="M5 12h14" />
+          <path d="m12 5 7 7-7 7" />
+        </>
+      )}
+    </svg>
+  );
+}
+
+function DownloadIcon() {
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M12 3v12" />
+      <path d="m7 10 5 5 5-5" />
+      <path d="M5 17v3h14v-3" />
+    </svg>
+  );
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
 export default function Hero() {
-  const { language, isRTL } =
-    useLanguage();
+  const { language, isRTL } = useLanguage();
 
   const sceneRef = useRef(null);
   const photoRef = useRef(null);
   const rearRingRef = useRef(null);
   const glowRef = useRef(null);
 
-  const t =
-    content[language] ||
-    content.fr;
+  const t = content[language] || content.fr;
+
+  const cvData = portfolio.links?.cv;
 
   const cvLink =
-    portfolio.links.cv[language] ||
-    portfolio.links.cv.fr;
+    typeof cvData === "string"
+      ? cvData
+      : cvData?.[language] || cvData?.fr || "";
 
   const cvDownloadName =
-    portfolio.links.cv.downloadName;
+    typeof cvData === "object" && cvData?.downloadName
+      ? cvData.downloadName
+      : "CV_Abran_Claire_Lydia_BILE.pdf";
 
-  const role =
-    portfolio.identity.role[
-      language
-    ] ||
-    portfolio.identity.role.fr;
+  const location = translate(
+    portfolio.identity?.location,
+    language
+  );
 
-  const location =
-    portfolio.identity.location[
-      language
-    ] ||
-    portfolio.identity.location.fr;
+  const availability = translate(
+    portfolio.availability,
+    language
+  );
 
-  const availability =
-    portfolio.availability[
-      language
-    ] ||
-    portfolio.availability.fr;
+  const orbitText = `${t.orbit} • ${t.orbit} •`;
 
-  const valueProposition =
-    portfolio.hero
-      ?.valueProposition?.[
-      language
-    ] ||
-    portfolio.hero
-      ?.valueProposition?.fr ||
-    "";
+  /* =======================================================
+     MOUVEMENT 3D DU PORTRAIT
+  ======================================================== */
 
-  const introduction =
-    portfolio.hero
-      ?.introduction?.[
-      language
-    ] ||
-    portfolio.hero?.introduction
-      ?.fr ||
-    "";
+  function handlePointerMove(event) {
+    if (event.pointerType !== "mouse") return;
 
-  const orbitText =
-    `${t.orbitLabel} • ${t.orbitLabel} •`;
-
-  const handlePointerMove = (
-    event
-  ) => {
     if (
-      event.pointerType !== "mouse"
+      window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches
     ) {
       return;
     }
 
-    const reduceMotion =
-      window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-      ).matches;
+    const scene = sceneRef.current;
+    if (!scene) return;
 
-    if (reduceMotion) {
-      return;
-    }
-
-    const scene =
-      sceneRef.current;
-
-    if (!scene) {
-      return;
-    }
-
-    const rect =
-      scene.getBoundingClientRect();
+    const rect = scene.getBoundingClientRect();
 
     const x =
-      (event.clientX -
-        rect.left) /
-        rect.width -
-      0.5;
+      (event.clientX - rect.left) / rect.width - 0.5;
 
     const y =
-      (event.clientY -
-        rect.top) /
-        rect.height -
-      0.5;
-
-    const rotateY = x * 9;
-    const rotateX = y * -7;
+      (event.clientY - rect.top) / rect.height - 0.5;
 
     scene.style.transform = `
       perspective(1100px)
-      rotateX(${rotateX}deg)
-      rotateY(${rotateY}deg)
+      rotateX(${y * -6}deg)
+      rotateY(${x * 8}deg)
     `;
 
     if (photoRef.current) {
       photoRef.current.style.transform = `
-        translate3d(
-          ${x * 14}px,
-          ${y * 11}px,
-          60px
-        )
+        translate3d(${x * 12}px, ${y * 10}px, 60px)
       `;
     }
 
-    if (
-      rearRingRef.current
-    ) {
+    if (rearRingRef.current) {
       rearRingRef.current.style.transform = `
-        translate3d(
-          ${x * -12}px,
-          ${y * -10}px,
-          -35px
-        )
+        translate3d(${x * -10}px, ${y * -8}px, -35px)
       `;
     }
 
     if (glowRef.current) {
       glowRef.current.style.transform = `
-        translate3d(
-          ${x * 20}px,
-          ${y * 16}px,
-          -55px
-        )
+        translate3d(${x * 16}px, ${y * 14}px, -55px)
       `;
     }
-  };
+  }
 
-  const resetScene = () => {
+  function resetScene() {
     if (sceneRef.current) {
       sceneRef.current.style.transform =
         "perspective(1100px) rotateX(0deg) rotateY(0deg)";
@@ -215,9 +262,7 @@ export default function Hero() {
         "translate3d(0, 0, 60px)";
     }
 
-    if (
-      rearRingRef.current
-    ) {
+    if (rearRingRef.current) {
       rearRingRef.current.style.transform =
         "translate3d(0, 0, -35px)";
     }
@@ -226,54 +271,87 @@ export default function Hero() {
       glowRef.current.style.transform =
         "translate3d(0, 0, -55px)";
     }
-  };
+  }
 
   return (
     <section
       id="home"
       className="
-        relative
-        overflow-hidden
-        border-b
-        border-border/60
+        relative isolate
+        border-b border-border/60
         bg-background/35
-        px-4
-        backdrop-blur-[1px]
-
-        sm:px-6
+        px-4 sm:px-6
       "
     >
+      {/* HALO DISCRET DU HERO */}
+      <div
+        aria-hidden="true"
+        className="
+          pointer-events-none
+          absolute -right-32 top-10
+          h-[28rem] w-[28rem]
+          rounded-full
+          bg-primary/[0.055]
+          blur-[110px]
+        "
+      />
+
+      {/* ===================================================
+          GRILLE PRINCIPALE
+
+          Deux colonnes sur desktop.
+          Espacements harmonisés pour garder
+          les actions accessibles.
+      ==================================================== */}
+
       <div
         className="
-          relative
-          z-10
-          mx-auto
-          grid
-          max-w-6xl
-          items-center
-          gap-8
-          py-12
+          relative z-10 mx-auto
+          grid max-w-6xl
+          items-center gap-10
 
-          sm:py-14
+          py-12 sm:py-14
 
-          lg:min-h-[calc(100vh-73px)]
-          lg:grid-cols-[1.2fr_0.8fr]
-          lg:gap-8
-          lg:py-16
+          lg:min-h-[calc(100svh-73px)]
+          lg:grid-cols-[1.15fr_0.85fr]
+          lg:gap-6
+          lg:py-8
         "
       >
-        {/* =====================================================
-            GAUCHE
-        ====================================================== */}
-        <div className="max-w-[760px]">
-          <p
-            className="
-              text-sm
-              font-semibold
-              tracking-wide
-              text-primary
-            "
-          >
+        {/* =================================================
+            COLONNE GAUCHE — PRÉSENTATION
+        ================================================== */}
+
+        <div
+          className={`
+            min-w-0 max-w-[760px]
+            ${isRTL ? "text-right" : "text-left"}
+          `}
+        >
+          {/* ÉTIQUETTE PROFESSIONNELLE */}
+          <div className="inline-flex items-center gap-2.5">
+            <span
+              aria-hidden="true"
+              className="
+                h-2 w-2 shrink-0
+                rounded-full bg-primary
+                shadow-[0_0_15px_var(--primary)]
+              "
+            />
+
+            <span
+              className="
+                text-[11px] font-bold
+                uppercase tracking-[0.18em]
+                text-primary sm:text-xs
+              "
+            >
+              {t.eyebrow}
+            </span>
+          </div>
+
+          {/* SALUTATION */}
+          <p className="mt-3 text-sm font-medium text-muted">
             {t.greeting}
           </p>
 
@@ -281,122 +359,107 @@ export default function Hero() {
           <h1
             dir="ltr"
             className={`
-              mt-3
-              text-[2.25rem]
-              font-bold
-              leading-[1.02]
+              mt-1.5
+              max-w-[750px]
+              text-[clamp(2.3rem,4.7vw,4rem)]
+              font-extrabold
+              leading-[1.06]
               tracking-[-0.045em]
               text-foreground
 
-              sm:text-[3.3rem]
-              md:text-[3.55rem]
+              ${isRTL ? "text-right" : "text-left"}
+            `}
+          >
+            BILE Abran
+            <span className="block">
+              Claire Lydia
+              <span className="text-primary">.</span>
+            </span>
+          </h1>
 
-              lg:whitespace-nowrap
-              lg:text-[3.25rem]
-
-              xl:text-[3.55rem]
+          {/* TECHNOLOGIES PRINCIPALES */}
+          <div
+            dir="ltr"
+            className={`
+              mt-5 flex flex-wrap gap-2
 
               ${
                 isRTL
-                  ? "text-right"
-                  : "text-left"
+                  ? "justify-end"
+                  : "justify-start"
               }
             `}
           >
-            {
-              portfolio.identity
-                .name
-            }
-          </h1>
+            {["React", "Next.js", "Laravel"].map(
+              (technology) => (
+                <span
+                  key={technology}
+                  className="
+                    rounded-lg
+                    border border-primary/25
+                    bg-primary/[0.065]
+                    px-3 py-1.5
+                    text-xs font-semibold
+                    text-primary
+                  "
+                >
+                  {technology}
+                </span>
+              )
+            )}
+          </div>
 
-          {/* RÔLE */}
-          <p
+          {/* PROPOSITION DE VALEUR */}
+          <h2
             className="
-              mt-4
-              text-lg
-              font-semibold
-              text-primary
+              mt-5 max-w-2xl
+              text-xl font-semibold
+              leading-snug
+              tracking-[-0.025em]
+              text-foreground
 
-              sm:mt-5
               sm:text-2xl
+              lg:text-[1.55rem]
             "
           >
-            {role}
+            {t.headline}
+          </h2>
+
+          {/* DESCRIPTION */}
+          <p
+            className="
+              mt-3 max-w-xl
+              text-sm leading-6
+              text-muted
+
+              sm:text-[0.9375rem]
+              sm:leading-7
+            "
+          >
+            {t.description}
           </p>
-
-          {valueProposition && (
-            <p
-              className="
-                mt-5
-                max-w-2xl
-                text-base
-                leading-7
-                text-foreground
-
-                sm:mt-6
-                sm:text-lg
-                sm:leading-8
-              "
-            >
-              {valueProposition}
-            </p>
-          )}
-
-          {introduction && (
-            <p
-              className="
-                mt-3
-                max-w-2xl
-                text-sm
-                leading-6
-                text-muted
-
-                sm:mt-4
-                sm:text-base
-                sm:leading-7
-              "
-            >
-              {introduction}
-            </p>
-          )}
 
           {/* DISPONIBILITÉ */}
           {availability && (
-            <div
-              className="
-                mt-6
-                sm:mt-7
-              "
-            >
+            <div className="mt-5">
               <span
                 className="
-                  inline-flex
-                  max-w-full
-                  items-center
-                  gap-2
+                  inline-flex max-w-full
+                  items-center gap-2.5
                   rounded-full
-                  border
-                  border-border/75
-                  bg-surface/55
-                  px-4
-                  py-2
-                  text-start
-                  text-sm
-                  font-medium
-                  text-muted
-                  shadow-sm
-                  backdrop-blur-xl
+                  border border-primary/25
+                  bg-surface/50
+                  px-3.5 py-2
+                  text-xs font-medium
+                  leading-5 text-muted
+                  sm:text-sm
                 "
               >
                 <span
                   aria-hidden="true"
                   className="
-                    h-2.5
-                    w-2.5
-                    shrink-0
-                    rounded-full
-                    bg-success
-                    shadow-[0_0_14px_var(--success)]
+                    h-2 w-2 shrink-0
+                    rounded-full bg-success
                   "
                 />
 
@@ -405,475 +468,397 @@ export default function Hero() {
             </div>
           )}
 
-          {/* ACTIONS */}
+          {/* =================================================
+              ACTIONS PRINCIPALES
+          ================================================== */}
+
           <div
             className="
-              mt-8
-              flex
-              flex-col
-              gap-3
-
-              sm:mt-9
-              sm:flex-row
-              sm:flex-wrap
-              sm:items-center
+              mt-5 flex flex-col gap-3
+              sm:flex-row sm:flex-wrap
             "
           >
             <a
               href="#projects"
               className="
-                inline-flex
-                w-full
-                items-center
-                justify-center
-                rounded-lg
-                bg-primary
-                px-6
-                py-3
-                text-sm
-                font-semibold
-                text-background
-                shadow-lg
-                shadow-primary/10
-                transition-all
-                duration-200
+                inline-flex min-h-11
+                items-center justify-center gap-2.5
+                rounded-xl
+                bg-primary px-5 py-3
+                text-sm font-bold text-white
+                shadow-lg shadow-primary/15
 
-                hover:-translate-y-1
+                transition-all duration-200
+
+                hover:-translate-y-0.5
                 hover:bg-primary-hover
+                hover:shadow-primary/25
 
-                sm:w-auto
+                focus-visible:outline
+                focus-visible:outline-2
+                focus-visible:outline-offset-4
+                focus-visible:outline-primary
               "
             >
-              {t.ctaProjects}
+              {t.projects}
+              <ArrowIcon isRTL={isRTL} />
             </a>
 
-            <a
-              href="#contact"
-              className="
-                inline-flex
-                w-full
-                items-center
-                justify-center
-                rounded-lg
-                border
-                border-border/80
-                bg-background/35
-                px-6
-                py-3
-                text-sm
-                font-semibold
-                text-foreground
-                backdrop-blur-xl
-                transition-all
-                duration-200
+            {cvLink && (
+              <a
+                href={cvLink}
+                download={cvDownloadName}
+                className="
+                  inline-flex min-h-11
+                  items-center justify-center gap-2.5
+                  rounded-xl
+                  border border-primary/30
+                  bg-surface/55
+                  px-5 py-3
+                  text-sm font-semibold
+                  text-foreground
 
-                hover:-translate-y-1
-                hover:border-primary/40
-                hover:bg-surface/55
+                  transition-all duration-200
 
-                sm:w-auto
-              "
-            >
-              {t.ctaContact}
-            </a>
+                  hover:-translate-y-0.5
+                  hover:border-primary/55
+                  hover:bg-primary/[0.08]
+                "
+              >
+                <DownloadIcon />
+                {t.downloadCV}
+              </a>
+            )}
+          </div>
 
+          {/* LIENS SECONDAIRES */}
+          <div
+            className="
+              mt-3 flex flex-wrap
+              items-center gap-x-6 gap-y-2
+            "
+          >
             {cvLink && (
               <a
                 href={cvLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="
-                  inline-flex
-                  w-full
-                  items-center
-                  justify-center
-                  rounded-lg
-                  border
-                  border-border/80
-                  bg-background/35
-                  px-6
-                  py-3
-                  text-sm
-                  font-semibold
-                  text-foreground
-                  backdrop-blur-xl
-                  transition-all
-                  duration-200
+                  text-xs font-medium
+                  text-muted
+                  underline underline-offset-4
+                  decoration-border
 
-                  hover:-translate-y-1
-                  hover:border-primary/40
-                  hover:bg-surface/55
+                  transition-colors
+                  hover:text-primary
 
-                  sm:w-auto
+                  sm:text-sm
                 "
               >
-                {t.ctaCvOpen}
+                {t.viewCV}
+              </a>
+            )}
+
+            {portfolio.links?.linkedin && (
+              <a
+                href={portfolio.links.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="
+                  inline-flex items-center gap-1.5
+                  text-xs font-medium
+                  text-primary
+
+                  transition-colors
+                  hover:text-primary-hover
+
+                  sm:text-sm
+                "
+              >
+                {t.linkedin}
+                <ArrowIcon diagonal />
               </a>
             )}
           </div>
 
-          {/* TÉLÉCHARGEMENT CV */}
-          {cvLink && (
-            <div className="mt-4">
-              <a
-                href={cvLink}
-                download={
-                  cvDownloadName
-                }
-                className="
-                  inline-flex
-                  items-center
-                  gap-2
-                  text-sm
-                  font-semibold
-                  text-primary
-                  transition-colors
+          {/* =================================================
+              INFORMATION COMPLÉMENTAIRE
 
-                  hover:text-primary-hover
+              La répétition de React, Next.js et
+              Laravel a été supprimée.
+          ================================================== */}
+
+          {location && (
+            <div
+              className="
+                mt-4
+                border-t border-border/50
+                pt-3
+              "
+            >
+              <p
+                className="
+                  flex flex-wrap
+                  items-center gap-x-2 gap-y-1
+                  text-xs text-muted
                 "
               >
                 <span
-                  aria-hidden="true"
+                  className="
+                    font-bold uppercase
+                    tracking-[0.1em]
+                    text-foreground
+                  "
                 >
-                  ↓
+                  {t.location}
                 </span>
 
-                {
-                  t.ctaCvDownload
-                }
-              </a>
+                <span
+                  aria-hidden="true"
+                  className="text-primary"
+                >
+                  •
+                </span>
+
+                <span>{location}</span>
+              </p>
             </div>
           )}
-
-          {/* INFOS */}
-          <div
-            className="
-              mt-8
-              grid
-              max-w-2xl
-              grid-cols-1
-              gap-5
-              border-t
-              border-border/50
-              pt-6
-
-              sm:mt-9
-              sm:grid-cols-2
-              sm:gap-6
-            "
-          >
-            <div>
-              <p
-                className="
-                  text-xs
-                  font-semibold
-                  uppercase
-                  tracking-[0.18em]
-                  text-muted
-                "
-              >
-                {t.stack}
-              </p>
-
-              <p
-                dir="ltr"
-                className="
-                  mt-2
-                  text-base
-                  font-semibold
-                  text-foreground
-                "
-              >
-                React · Next.js ·
-                Laravel
-              </p>
-            </div>
-
-            <div>
-              <p
-                className="
-                  text-xs
-                  font-semibold
-                  uppercase
-                  tracking-[0.18em]
-                  text-muted
-                "
-              >
-                {t.location}
-              </p>
-
-              <p
-                className="
-                  mt-2
-                  text-base
-                  font-semibold
-                  text-foreground
-                "
-              >
-                {location}
-              </p>
-            </div>
-          </div>
         </div>
 
-        {/* =====================================================
-            DROITE — COMPOSITION CIRCULAIRE 3D
+        {/* =================================================
+            COLONNE DROITE — PORTRAIT 3D
 
-            Desktop uniquement :
-            la landing contient déjà le portrait.
-            Cela évite de surcharger le Hero mobile.
-        ====================================================== */}
+            Taille inchangée : 24rem.
+            Décalage de 24px vers la colonne texte.
+        ================================================== */}
+
         <div
-          className="
-            hidden
-            items-center
-            justify-center
-
+          className={`
+            hidden items-center justify-center
             lg:flex
-            lg:justify-end
-          "
+
+            ${
+              isRTL
+                ? "lg:justify-start"
+                : "lg:justify-end"
+            }
+          `}
         >
+          {/* Conteneur de positionnement :
+              déplacer celui-ci ne perturbe pas
+              les transformations 3D de la scène. */}
           <div
-            ref={sceneRef}
-            onPointerMove={
-              handlePointerMove
+            className={
+              isRTL
+                ? "relative lg:translate-x-[24px]"
+                : "relative lg:-translate-x-[24px]"
             }
-            onPointerLeave={
-              resetScene
-            }
-            onPointerCancel={
-              resetScene
-            }
-            className="
-              relative
-              flex
-              h-[24rem]
-              w-[24rem]
-              items-center
-              justify-center
-              transition-transform
-              duration-300
-              ease-out
-            "
-            style={{
-              perspective:
-                "1100px",
-
-              transformStyle:
-                "preserve-3d",
-
-              transform:
-                "perspective(1100px) rotateX(0deg) rotateY(0deg)",
-
-              willChange:
-                "transform",
-            }}
           >
-            {/* HALO */}
             <div
-              ref={glowRef}
-              aria-hidden="true"
+              ref={sceneRef}
+              onPointerMove={handlePointerMove}
+              onPointerLeave={resetScene}
+              onPointerCancel={resetScene}
               className="
-                absolute
-                inset-[16%]
-                rounded-full
-                bg-primary/15
-                blur-[75px]
+                relative flex
+                h-[24rem] w-[24rem]
+                items-center justify-center
+
                 transition-transform
-                duration-300
+                duration-300 ease-out
               "
               style={{
+                perspective: "1100px",
+                transformStyle: "preserve-3d",
                 transform:
-                  "translate3d(0, 0, -55px)",
-              }}
-            />
-
-            {/* ANNEAU PROFOND */}
-            <div
-              ref={rearRingRef}
-              aria-hidden="true"
-              className="
-                absolute
-                inset-[5%]
-                rounded-full
-                border
-                border-primary/15
-                transition-transform
-                duration-300
-              "
-              style={{
-                transform:
-                  "translate3d(0, 0, -35px)",
-              }}
-            />
-
-            {/* ANNEAU SECONDAIRE */}
-            <div
-              aria-hidden="true"
-              className="
-                absolute
-                inset-[10%]
-                rounded-full
-                border
-                border-secondary/10
-              "
-              style={{
-                transform:
-                  "translateZ(-10px)",
-              }}
-            />
-
-            {/* TEXTE ORBITAL */}
-            <svg
-              viewBox="0 0 500 500"
-              className="
-                absolute
-                inset-0
-                h-full
-                w-full
-                animate-orbit-slow
-                text-primary
-              "
-              aria-hidden="true"
-            >
-              <defs>
-                <path
-                  id="hero-orbit-path"
-                  d="
-                    M 250 250
-                    m -205 0
-                    a 205 205 0 1 1 410 0
-                    a 205 205 0 1 1 -410 0
-                  "
-                />
-              </defs>
-
-              <text
-                fill="currentColor"
-                fontSize="18"
-                fontWeight="700"
-                letterSpacing="4"
-              >
-                <textPath
-                  href="#hero-orbit-path"
-                  startOffset="0%"
-                  textLength="1180"
-                  lengthAdjust="spacing"
-                >
-                  {orbitText}
-                </textPath>
-              </text>
-            </svg>
-
-            {/* PHOTO */}
-            <div
-              ref={photoRef}
-              className="
-                relative
-                z-20
-                h-[15rem]
-                w-[15rem]
-                transition-transform
-                duration-300
-              "
-              style={{
-                transform:
-                  "translate3d(0, 0, 60px)",
-
-                transformStyle:
-                  "preserve-3d",
+                  "perspective(1100px) rotateX(0deg) rotateY(0deg)",
               }}
             >
+              {/* HALO ARRIÈRE */}
+              <div
+                ref={glowRef}
+                aria-hidden="true"
+                className="
+                  absolute inset-[12%]
+                  rounded-full
+                  bg-primary/20
+                  blur-[80px]
+
+                  transition-transform duration-300
+                "
+                style={{
+                  transform:
+                    "translate3d(0, 0, -55px)",
+                }}
+              />
+
+              {/* ANNEAU ARRIÈRE */}
+              <div
+                ref={rearRingRef}
+                aria-hidden="true"
+                className="
+                  absolute inset-[5%]
+                  rounded-full
+                  border border-primary/20
+
+                  transition-transform duration-300
+                "
+                style={{
+                  transform:
+                    "translate3d(0, 0, -35px)",
+                }}
+              />
+
+              {/* ANNEAU INTÉRIEUR */}
               <div
                 aria-hidden="true"
                 className="
-                  absolute
-                  -inset-3
+                  absolute inset-[10%]
                   rounded-full
-                  border
-                  border-primary/20
-                  bg-primary/[0.025]
-                  shadow-[0_0_60px_rgba(96,165,250,0.14)]
+                  border border-secondary/15
+                "
+                style={{
+                  transform: "translateZ(-10px)",
+                }}
+              />
+
+              {/* TEXTE ORBITAL */}
+              <svg
+                viewBox="0 0 500 500"
+                className="
+                  pointer-events-none
+                  absolute inset-0
+                  h-full w-full
+                  animate-orbit-slow
+                  overflow-visible
+                  text-primary
+                "
+                aria-hidden="true"
+              >
+                <defs>
+                  <path
+                    id="hero-cyber-violet-orbit"
+                    d="
+                      M 250 250
+                      m -205 0
+                      a 205 205 0 1 1 410 0
+                      a 205 205 0 1 1 -410 0
+                    "
+                  />
+                </defs>
+
+                <text
+                  fill="currentColor"
+                  fontSize="18"
+                  fontWeight="700"
+                  letterSpacing="4"
+                >
+                  <textPath
+                    href="#hero-cyber-violet-orbit"
+                    startOffset="0%"
+                    textLength="1180"
+                    lengthAdjust="spacing"
+                  >
+                    {orbitText}
+                  </textPath>
+                </text>
+              </svg>
+
+              {/* PORTRAIT */}
+              <div
+                ref={photoRef}
+                className="
+                  relative z-20
+                  h-[15rem] w-[15rem]
+
+                  transition-transform
+                  duration-300
+                "
+                style={{
+                  transform:
+                    "translate3d(0, 0, 60px)",
+                  transformStyle: "preserve-3d",
+                }}
+              >
+                {/* CONTOUR LUMINEUX */}
+                <div
+                  aria-hidden="true"
+                  className="
+                    absolute -inset-3
+                    rounded-full
+                    border border-primary/25
+                    bg-primary/[0.035]
+                    shadow-[0_0_65px_var(--glow-primary)]
+                  "
+                />
+
+                {/* IMAGE */}
+                <div
+                  className="
+                    absolute inset-0
+                    overflow-hidden rounded-full
+                    border border-border/40
+                    bg-surface
+
+                    shadow-2xl
+                    shadow-black/25
+
+                    animate-float-slow
+                  "
+                >
+                  <Image
+                    src="/image/claire-portfolio.jpeg"
+                    alt={portfolio.identity.name}
+                    fill
+                    priority
+                    sizes="240px"
+                    className="
+                      object-cover
+                      object-center
+                    "
+                  />
+                </div>
+              </div>
+
+              {/* ÉLÉMENTS DÉCORATIFS */}
+              <div
+                aria-hidden="true"
+                className="
+                  absolute left-[7%] top-[25%]
+                  h-8 w-8
+                  rounded-full
+
+                  border border-primary/25
+                  bg-primary/[0.035]
+
+                  animate-float-medium
                 "
               />
 
               <div
+                aria-hidden="true"
                 className="
-                  absolute
-                  inset-0
-                  overflow-hidden
-                  rounded-full
-                  border
-                  border-white/10
-                  bg-surface
-                  shadow-2xl
-                  shadow-black/35
-                  animate-float-slow
+                  absolute right-[5%] top-[35%]
+                  h-9 w-9 rotate-45
+                  rounded-xl
+
+                  border border-primary/20
+                  bg-primary/[0.025]
                 "
-              >
-                <Image
-                  src="/image/claire-portfolio.jpeg"
-                  alt={
-                    portfolio
-                      .identity.name
-                  }
-                  fill
-                  priority
-                  sizes="240px"
-                  className="
-                    object-cover
-                    object-center
-                  "
-                />
-              </div>
+              />
+
+              <div
+                aria-hidden="true"
+                className="
+                  absolute bottom-[17%] left-[16%]
+                  h-2.5 w-2.5
+                  rounded-full bg-primary
+
+                  shadow-[0_0_24px_var(--primary)]
+                "
+              />
             </div>
-
-            {/* ACCENTS */}
-            <div
-              aria-hidden="true"
-              className="
-                absolute
-                left-[7%]
-                top-[25%]
-                h-8
-                w-8
-                rounded-full
-                border
-                border-primary/25
-                bg-primary/[0.025]
-                animate-float-medium
-              "
-            />
-
-            <div
-              aria-hidden="true"
-              className="
-                absolute
-                right-[5%]
-                top-[35%]
-                h-9
-                w-9
-                rotate-45
-                rounded-xl
-                border
-                border-primary/20
-                bg-primary/[0.02]
-              "
-            />
-
-            <div
-              aria-hidden="true"
-              className="
-                absolute
-                bottom-[17%]
-                left-[16%]
-                h-2.5
-                w-2.5
-                rounded-full
-                bg-primary
-                shadow-[0_0_24px_var(--primary)]
-              "
-            />
           </div>
         </div>
       </div>

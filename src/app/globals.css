@@ -1,117 +1,143 @@
+
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* =========================================================
-   THÈME CLAIR
+   LYDIA PORTFOLIO — CYBER VIOLET EDITION
+   Next.js + Tailwind CSS 4
+
+   Direction artistique :
+   Violet électrique
+   Rose lumineux
+   Fond violet nuit
+   Interfaces premium
+   Animations 3D conservées
+   Mode clair / sombre
+========================================================= */
+
+/* =========================================================
+   01 — THÈME CLAIR
 ========================================================= */
 
 :root {
+  color-scheme: light;
+
   /* Backgrounds */
-  --background: #ffffff;
-  --surface: #f8fafc;
+  --background: #faf8ff;
+  --surface: #f3edff;
   --surface-elevated: #ffffff;
 
   /* Brand */
-  --primary: #2563eb;
-  --primary-hover: #1d4ed8;
-  --secondary: #0284c7;
+  --primary: #7e22ce;
+  --primary-hover: #6b21a8;
+  --secondary: #be185d;
+
+  /* Accents */
+  --accent-violet: #a855f7;
+  --accent-pink: #f472b6;
 
   /* Typography */
-  --foreground: #0f172a;
-  --muted: #64748b;
+  --foreground: #211335;
+  --muted: #665875;
 
   /* UI */
-  --border: #e2e8f0;
+  --border: #e7dcf3;
 
   /* Feedback */
-  --success: #16a34a;
-  --warning: #f59e0b;
-  --danger: #dc2626;
+  --success: #15803d;
+  --warning: #b45309;
+  --danger: #b91c1c;
 
   /* Effects */
-  --overlay: rgba(15, 23, 42, 0.08);
+  --overlay: rgba(69, 27, 101, 0.07);
 
   /* Glass */
-  --glass: rgba(255, 255, 255, 0.58);
-  --glass-soft: rgba(255, 255, 255, 0.38);
-  --glass-strong: rgba(255, 255, 255, 0.78);
+  --glass: rgba(255, 255, 255, 0.78);
+  --glass-soft: rgba(243, 237, 255, 0.55);
+  --glass-strong: rgba(255, 255, 255, 0.94);
 
   /* 3D borders */
-  --glass-border: rgba(37, 99, 235, 0.14);
-  --glass-border-soft: rgba(148, 163, 184, 0.22);
+  --glass-border: rgba(126, 34, 206, 0.2);
+  --glass-border-soft: rgba(126, 34, 206, 0.12);
 
   /* Glow */
-  --glow-primary: rgba(37, 99, 235, 0.2);
-  --glow-secondary: rgba(2, 132, 199, 0.16);
+  --glow-primary: rgba(168, 85, 247, 0.17);
+  --glow-secondary: rgba(244, 114, 182, 0.13);
 
   /* Shadows */
   --shadow-soft:
-    0 18px 50px rgba(15, 23, 42, 0.08);
+    0 14px 38px rgba(65, 28, 103, 0.07);
 
   --shadow-medium:
-    0 24px 70px rgba(15, 23, 42, 0.12);
+    0 22px 65px rgba(65, 28, 103, 0.11);
 
   --shadow-deep:
-    0 35px 100px rgba(15, 23, 42, 0.16);
+    0 35px 100px rgba(65, 28, 103, 0.16);
 }
 
 /* =========================================================
-   THÈME SOMBRE
+   02 — THÈME SOMBRE
 ========================================================= */
 
 .dark {
+  color-scheme: dark;
+
   /* Backgrounds */
-  --background: #020617;
-  --surface: #0f172a;
-  --surface-elevated: #1e293b;
+  --background: #100b25;
+  --surface: #241548;
+  --surface-elevated: #302054;
 
   /* Brand */
-  --primary: #60a5fa;
-  --primary-hover: #93c5fd;
-  --secondary: #38bdf8;
+  --primary: #a855f7;
+  --primary-hover: #c084fc;
+  --secondary: #f472b6;
+
+  /* Accents */
+  --accent-violet: #a855f7;
+  --accent-pink: #f472b6;
 
   /* Typography */
   --foreground: #f8fafc;
-  --muted: #94a3b8;
+  --muted: #bdb1d2;
 
   /* UI */
-  --border: #334155;
+  --border: #49366c;
 
   /* Feedback */
   --success: #4ade80;
   --warning: #fbbf24;
-  --danger: #f87171;
+  --danger: #fb7185;
 
   /* Effects */
-  --overlay: rgba(255, 255, 255, 0.08);
+  --overlay: rgba(255, 255, 255, 0.055);
 
   /* Glass */
-  --glass: rgba(15, 23, 42, 0.62);
-  --glass-soft: rgba(15, 23, 42, 0.4);
-  --glass-strong: rgba(15, 23, 42, 0.82);
+  --glass: rgba(36, 21, 72, 0.68);
+  --glass-soft: rgba(27, 17, 53, 0.48);
+  --glass-strong: rgba(36, 21, 72, 0.9);
 
   /* 3D borders */
-  --glass-border: rgba(96, 165, 250, 0.2);
-  --glass-border-soft: rgba(148, 163, 184, 0.18);
+  --glass-border: rgba(168, 85, 247, 0.3);
+  --glass-border-soft: rgba(192, 132, 252, 0.16);
 
   /* Glow */
-  --glow-primary: rgba(96, 165, 250, 0.2);
-  --glow-secondary: rgba(56, 189, 248, 0.16);
+  --glow-primary: rgba(168, 85, 247, 0.26);
+  --glow-secondary: rgba(244, 114, 182, 0.2);
 
   /* Shadows */
   --shadow-soft:
-    0 18px 50px rgba(0, 0, 0, 0.2);
+    0 16px 42px rgba(0, 0, 0, 0.25);
 
   --shadow-medium:
-    0 24px 70px rgba(0, 0, 0, 0.3);
+    0 26px 70px rgba(0, 0, 0, 0.34);
 
   --shadow-deep:
-    0 35px 100px rgba(0, 0, 0, 0.42);
+    0 38px 105px rgba(0, 0, 0, 0.48);
 }
 
 /* =========================================================
-   MAPPING TAILWIND
+   03 — MAPPING TAILWIND
 ========================================================= */
 
 @theme inline {
@@ -123,6 +149,9 @@
   --color-primary-hover: var(--primary-hover);
   --color-secondary: var(--secondary);
 
+  --color-accent-violet: var(--accent-violet);
+  --color-accent-pink: var(--accent-pink);
+
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
   --color-border: var(--border);
@@ -133,7 +162,7 @@
 }
 
 /* =========================================================
-   BASE
+   04 — BASE GLOBALE
 ========================================================= */
 
 *,
@@ -150,7 +179,6 @@ html {
 body {
   min-height: 100vh;
   margin: 0;
-
   overflow-x: hidden;
 
   background: var(--background);
@@ -162,12 +190,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   transition:
-    background-color 200ms ease,
-    color 200ms ease;
+    background-color 220ms ease,
+    color 220ms ease;
 }
 
 /* =========================================================
-   ANCRES / NAVBAR
+   05 — ANCRES / NAVBAR
 ========================================================= */
 
 section[id] {
@@ -175,7 +203,7 @@ section[id] {
 }
 
 /* =========================================================
-   TEXTE
+   06 — TYPOGRAPHIE
 ========================================================= */
 
 h1,
@@ -188,13 +216,30 @@ p {
   margin-top: 0;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+p {
+  overflow-wrap: break-word;
+}
+
 ::selection {
   background: var(--primary);
-  color: var(--background);
+  color: #ffffff;
+}
+
+.dark ::selection {
+  color: #100b25;
 }
 
 /* =========================================================
-   LIENS
+   07 — LIENS
 ========================================================= */
 
 a {
@@ -203,7 +248,7 @@ a {
 }
 
 /* =========================================================
-   BOUTONS / FORMULAIRES
+   08 — BOUTONS / FORMULAIRES
 ========================================================= */
 
 button,
@@ -222,7 +267,7 @@ button:disabled {
 }
 
 /* =========================================================
-   MOBILE
+   09 — MOBILE
 ========================================================= */
 
 button,
@@ -231,7 +276,7 @@ a {
 }
 
 /* =========================================================
-   IMAGES / MÉDIAS
+   10 — IMAGES / MÉDIAS
 ========================================================= */
 
 img,
@@ -242,8 +287,16 @@ canvas {
   max-width: 100%;
 }
 
+img {
+  height: auto;
+}
+
+video {
+  height: auto;
+}
+
 /* =========================================================
-   ACCESSIBILITÉ CLAVIER
+   11 — ACCESSIBILITÉ CLAVIER
 ========================================================= */
 
 a:focus-visible,
@@ -256,7 +309,7 @@ select:focus-visible {
 }
 
 /* =========================================================
-   MULTILINGUE / RTL
+   12 — MULTILINGUE / RTL
 ========================================================= */
 
 html[dir="rtl"] {
@@ -268,28 +321,18 @@ html[dir="ltr"] {
 }
 
 /* =========================================================
-   SYSTÈME 3D GLOBAL
+   13 — SYSTÈME 3D GLOBAL
 ========================================================= */
 
-/*
-  Conteneur racine d'une scène 3D.
-*/
 .perspective-scene {
   perspective: 1200px;
   transform-style: preserve-3d;
 }
 
-/*
-  Permet aux enfants d'une carte de vivre
-  sur plusieurs profondeurs.
-*/
 .preserve-3d {
   transform-style: preserve-3d;
 }
 
-/*
-  Accélération GPU pour les éléments animés.
-*/
 .gpu-layer {
   transform: translateZ(0);
   backface-visibility: hidden;
@@ -297,7 +340,7 @@ html[dir="ltr"] {
 }
 
 /* =========================================================
-   GLASSMORPHISM
+   14 — GLASSMORPHISM
 ========================================================= */
 
 .glass-panel {
@@ -313,34 +356,29 @@ html[dir="ltr"] {
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
 
-  box-shadow:
-    var(--shadow-medium);
+  box-shadow: var(--shadow-medium);
 }
 
 .glass-panel-soft {
   border: 1px solid var(--glass-border-soft);
 
-  background:
-    var(--glass-soft);
+  background: var(--glass-soft);
 
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 
-  box-shadow:
-    var(--shadow-soft);
+  box-shadow: var(--shadow-soft);
 }
 
 /* =========================================================
-   CARTES 3D
+   15 — CARTES 3D
 ========================================================= */
 
 .depth-card {
   position: relative;
-
   transform-style: preserve-3d;
 
-  border:
-    1px solid var(--glass-border-soft);
+  border: 1px solid var(--glass-border-soft);
 
   background:
     linear-gradient(
@@ -352,8 +390,7 @@ html[dir="ltr"] {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
 
-  box-shadow:
-    var(--shadow-medium);
+  box-shadow: var(--shadow-medium);
 
   transition:
     border-color 220ms ease,
@@ -362,44 +399,36 @@ html[dir="ltr"] {
 }
 
 .depth-card:hover {
-  border-color:
-    var(--glass-border);
-
-  box-shadow:
-    var(--shadow-deep);
+  border-color: var(--glass-border);
+  box-shadow: var(--shadow-deep);
 }
 
 /* =========================================================
-   PROFONDEURS
+   16 — PROFONDEURS 3D
 ========================================================= */
 
 .depth-back {
-  transform:
-    translateZ(-35px);
+  transform: translateZ(-35px);
 }
 
 .depth-base {
-  transform:
-    translateZ(0);
+  transform: translateZ(0);
 }
 
 .depth-medium {
-  transform:
-    translateZ(35px);
+  transform: translateZ(35px);
 }
 
 .depth-front {
-  transform:
-    translateZ(65px);
+  transform: translateZ(65px);
 }
 
 .depth-floating {
-  transform:
-    translateZ(95px);
+  transform: translateZ(95px);
 }
 
 /* =========================================================
-   HALOS
+   17 — HALOS VIOLET ET ROSE
 ========================================================= */
 
 .glow-primary {
@@ -410,8 +439,7 @@ html[dir="ltr"] {
       transparent 70%
     );
 
-  filter:
-    blur(60px);
+  filter: blur(60px);
 }
 
 .glow-secondary {
@@ -422,12 +450,11 @@ html[dir="ltr"] {
       transparent 72%
     );
 
-  filter:
-    blur(70px);
+  filter: blur(70px);
 }
 
 /* =========================================================
-   EFFET DE LIGNE LUMINEUSE
+   18 — LIGNE LUMINEUSE
 ========================================================= */
 
 .light-line {
@@ -443,127 +470,88 @@ html[dir="ltr"] {
 }
 
 /* =========================================================
-   ANIMATIONS GLOBALES
+   19 — ANIMATIONS GLOBALES
 ========================================================= */
 
 .animate-orbit-slow {
-  animation:
-    orbit-slow 22s linear infinite;
+  animation: orbit-slow 22s linear infinite;
 }
 
 .animate-orbit-medium {
-  animation:
-    orbit-medium 16s linear infinite;
+  animation: orbit-medium 16s linear infinite;
 }
 
 .animate-float-slow {
-  animation:
-    float-slow 7s ease-in-out infinite;
+  animation: float-slow 7s ease-in-out infinite;
 }
 
 .animate-float-medium {
-  animation:
-    float-medium 5s ease-in-out infinite;
+  animation: float-medium 5s ease-in-out infinite;
 }
 
 .animate-float-fast {
-  animation:
-    float-fast 3.8s ease-in-out infinite;
+  animation: float-fast 3.8s ease-in-out infinite;
 }
 
 /* =========================================================
-   KEYFRAMES
+   20 — KEYFRAMES
 ========================================================= */
 
 @keyframes orbit-slow {
   from {
-    transform:
-      rotate(0deg);
+    transform: rotate(0deg);
   }
 
   to {
-    transform:
-      rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 
 @keyframes orbit-medium {
   from {
-    transform:
-      rotate(0deg);
+    transform: rotate(0deg);
   }
 
   to {
-    transform:
-      rotate(-360deg);
+    transform: rotate(-360deg);
   }
 }
 
 @keyframes float-slow {
   0%,
   100% {
-    transform:
-      translate3d(
-        0,
-        0,
-        0
-      );
+    transform: translate3d(0, 0, 0);
   }
 
   50% {
-    transform:
-      translate3d(
-        0,
-        -10px,
-        0
-      );
+    transform: translate3d(0, -10px, 0);
   }
 }
 
 @keyframes float-medium {
   0%,
   100% {
-    transform:
-      translate3d(
-        0,
-        0,
-        0
-      );
+    transform: translate3d(0, 0, 0);
   }
 
   50% {
-    transform:
-      translate3d(
-        0,
-        -8px,
-        0
-      );
+    transform: translate3d(0, -8px, 0);
   }
 }
 
 @keyframes float-fast {
   0%,
   100% {
-    transform:
-      translate3d(
-        0,
-        0,
-        0
-      );
+    transform: translate3d(0, 0, 0);
   }
 
   50% {
-    transform:
-      translate3d(
-        0,
-        -6px,
-        0
-      );
+    transform: translate3d(0, -6px, 0);
   }
 }
 
 /* =========================================================
-   INTERACTIONS
+   21 — INTERACTIONS
 ========================================================= */
 
 .interactive-surface {
@@ -574,12 +562,11 @@ html[dir="ltr"] {
 }
 
 .interactive-surface:hover {
-  border-color:
-    var(--glass-border);
+  border-color: var(--glass-border);
 }
 
 /* =========================================================
-   SCROLLBAR
+   22 — SCROLLBAR
 ========================================================= */
 
 * {
@@ -595,28 +582,22 @@ html[dir="ltr"] {
 }
 
 ::-webkit-scrollbar-track {
-  background:
-    var(--background);
+  background: var(--background);
 }
 
 ::-webkit-scrollbar-thumb {
-  border:
-    3px solid var(--background);
-
-  border-radius:
-    999px;
-
-  background:
-    var(--border);
+  border: 3px solid var(--background);
+  border-radius: 999px;
+  background: var(--border);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background:
-    var(--muted);
+  background: var(--muted);
 }
 
 /* =========================================================
-   ACCESSIBILITÉ — RÉDUCTION DES ANIMATIONS
+   23 — ACCESSIBILITÉ
+   RÉDUCTION DES ANIMATIONS
 ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
@@ -627,22 +608,16 @@ html[dir="ltr"] {
   *,
   *::before,
   *::after {
-    animation-duration:
-      0.01ms !important;
-
-    animation-iteration-count:
-      1 !important;
-
-    transition-duration:
-      0.01ms !important;
-
-    scroll-behavior:
-      auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
 /* =========================================================
-   MOBILE — SIMPLIFICATION 3D
+   24 — MOBILE
+   SIMPLIFICATION 3D
 ========================================================= */
 
 @media (max-width: 767px) {
@@ -651,17 +626,17 @@ html[dir="ltr"] {
   .depth-medium,
   .depth-front,
   .depth-floating {
-    transform:
-      translateZ(0);
+    transform: translateZ(0);
   }
 
   .glass-panel,
   .glass-panel-soft,
   .depth-card {
-    backdrop-filter:
-      blur(10px);
-
-    -webkit-backdrop-filter:
-      blur(10px);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
 }
+
+/* =========================================================
+   FIN — LYDIA PORTFOLIO CYBER VIOLET
+========================================================= */

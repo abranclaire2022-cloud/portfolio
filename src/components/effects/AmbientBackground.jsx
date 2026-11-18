@@ -1,487 +1,558 @@
+
 "use client";
 
-import { useEffect, useRef } from "react";
+/* =========================================================
+   LYDIA PORTFOLIO — GLASS 3D BACKGROUND
+   Cyber Violet Edition
 
-export default function AmbientBackground() {
-  const deepLayerRef = useRef(null);
-  const gridLayerRef = useRef(null);
-  const orbitLayerRef = useRef(null);
-  const frontLayerRef = useRef(null);
-  const cursorGlowRef = useRef(null);
-  const frameRef = useRef(null);
+   - Sphères translucides en verre
+   - Anneaux 3D
+   - Reflets violets et roses
+   - Animations douces
+   - Compatible Next.js / React
+   - Compatible mode clair et sombre
+   - Responsive
+   - Respect des préférences de mouvement
+   - Aucune dépendance supplémentaire
+========================================================= */
 
-  const mouseRef = useRef({
-    x: 0,
-    y: 0,
-  });
+const spheres = [
+  {
+    id: "glass-one",
+    position: "glass-position-one",
+    variant: "violet",
+    animation: "glassFloatOne",
+    duration: "23s",
+  },
+  {
+    id: "glass-two",
+    position: "glass-position-two",
+    variant: "pink",
+    animation: "glassFloatTwo",
+    duration: "27s",
+  },
+  {
+    id: "glass-three",
+    position: "glass-position-three",
+    variant: "soft",
+    animation: "glassFloatThree",
+    duration: "29s",
+  },
+];
 
-  const scrollRef = useRef(0);
+/* =========================================================
+   SPHÈRE EN VERRE
+========================================================= */
 
-  useEffect(() => {
-    const reducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    );
-
-    const finePointer = window.matchMedia(
-      "(pointer: fine)"
-    );
-
-    const updateScene = () => {
-      const { x, y } = mouseRef.current;
-      const scroll = scrollRef.current;
-
-      if (deepLayerRef.current) {
-        deepLayerRef.current.style.transform = `
-          translate3d(
-            ${x * -8}px,
-            ${y * -6 - scroll * 0.003}px,
-            0
-          )
-          scale(1.05)
-        `;
-      }
-
-      if (gridLayerRef.current) {
-        gridLayerRef.current.style.transform = `
-          translate3d(
-            ${x * -14}px,
-            ${y * -10 + scroll * 0.005}px,
-            0
-          )
-        `;
-      }
-
-      if (orbitLayerRef.current) {
-        orbitLayerRef.current.style.transform = `
-          translate3d(
-            ${x * -24}px,
-            ${y * -18 - scroll * 0.008}px,
-            0
-          )
-        `;
-      }
-
-      if (frontLayerRef.current) {
-        frontLayerRef.current.style.transform = `
-          translate3d(
-            ${x * -40}px,
-            ${y * -28 - scroll * 0.012}px,
-            0
-          )
-        `;
-      }
-
-      if (cursorGlowRef.current) {
-        cursorGlowRef.current.style.transform = `
-          translate3d(
-            ${x * window.innerWidth * 0.32}px,
-            ${y * window.innerHeight * 0.28}px,
-            0
-          )
-        `;
-      }
-
-      frameRef.current = null;
-    };
-
-    const requestUpdate = () => {
-      if (frameRef.current) {
-        return;
-      }
-
-      frameRef.current =
-        requestAnimationFrame(updateScene);
-    };
-
-    const handlePointerMove = (event) => {
-      if (
-        reducedMotion.matches ||
-        !finePointer.matches
-      ) {
-        return;
-      }
-
-      mouseRef.current = {
-        x:
-          event.clientX /
-            window.innerWidth -
-          0.5,
-
-        y:
-          event.clientY /
-            window.innerHeight -
-          0.5,
-      };
-
-      requestUpdate();
-    };
-
-    const handleScroll = () => {
-      if (reducedMotion.matches) {
-        return;
-      }
-
-      scrollRef.current =
-        window.scrollY;
-
-      requestUpdate();
-    };
-
-    const resetScene = () => {
-      mouseRef.current = {
-        x: 0,
-        y: 0,
-      };
-
-      requestUpdate();
-    };
-
-    window.addEventListener(
-      "pointermove",
-      handlePointerMove,
-      {
-        passive: true,
-      }
-    );
-
-    window.addEventListener(
-      "scroll",
-      handleScroll,
-      {
-        passive: true,
-      }
-    );
-
-    window.addEventListener(
-      "blur",
-      resetScene
-    );
-
-    return () => {
-      window.removeEventListener(
-        "pointermove",
-        handlePointerMove
-      );
-
-      window.removeEventListener(
-        "scroll",
-        handleScroll
-      );
-
-      window.removeEventListener(
-        "blur",
-        resetScene
-      );
-
-      if (frameRef.current) {
-        cancelAnimationFrame(
-          frameRef.current
-        );
-      }
-    };
-  }, []);
-
+function GlassSphere({
+  position,
+  variant,
+  animation,
+  duration,
+}) {
   return (
     <div
-      aria-hidden="true"
-      className="pointer-events-none absolute inset-0 overflow-hidden"
+      className={`glass3d-sphere ${position}`}
+      style={{
+        animationName: animation,
+        animationDuration: duration,
+      }}
     >
-      {/* =====================================================
-          1 — PROFONDEUR / LUMIÈRE
-      ====================================================== */}
-      <div
-        ref={deepLayerRef}
-        className="absolute inset-[-8%] transition-transform duration-700 ease-out"
-        style={{
-          willChange: "transform",
-        }}
-      >
-        {/* Halo supérieur droit */}
-        <div
-          className="absolute right-[-4%] top-[-12%] h-[52rem] w-[52rem] rounded-full blur-[150px]"
-          style={{
-            opacity: 0.13,
-            background:
-              "radial-gradient(circle, var(--primary), transparent 68%)",
-          }}
-        />
-
-        {/* Halo gauche */}
-        <div
-          className="absolute left-[-15%] top-[28%] h-[42rem] w-[42rem] rounded-full blur-[140px]"
-          style={{
-            opacity: 0.07,
-            background:
-              "radial-gradient(circle, var(--secondary), transparent 72%)",
-          }}
-        />
-
-        {/* Halo inférieur */}
-        <div
-          className="absolute bottom-[-20%] right-[20%] h-[38rem] w-[38rem] rounded-full blur-[130px]"
-          style={{
-            opacity: 0.065,
-            background:
-              "radial-gradient(circle, var(--primary), transparent 72%)",
-          }}
-        />
+      <div className={`glass3d-ball glass3d-ball-${variant}`}>
+        <div className="glass3d-highlight" />
+        <div className="glass3d-reflection" />
+        <div className="glass3d-inner-shadow" />
+        <div className="glass3d-specular" />
       </div>
+    </div>
+  );
+}
 
-      {/* =====================================================
-          2 — GRILLE / ESPACE
-      ====================================================== */}
+/* =========================================================
+   BACKGROUND PRINCIPAL
+========================================================= */
+
+export default function AmbientBackground() {
+  return (
+    <>
       <div
-        ref={gridLayerRef}
-        className="absolute inset-0 transition-transform duration-500 ease-out"
-        style={{
-          willChange: "transform",
-        }}
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 overflow-hidden"
       >
-        {/* Grille très discrète */}
+        {/* FOND PRINCIPAL */}
         <div
           className="absolute inset-0"
           style={{
-            opacity: 0.045,
-
-            backgroundImage: `
-              linear-gradient(
-                to right,
-                var(--border) 1px,
-                transparent 1px
-              ),
-              linear-gradient(
-                to bottom,
-                var(--border) 1px,
-                transparent 1px
-              )
-            `,
-
-            backgroundSize:
-              "92px 92px",
-
-            maskImage:
-              "radial-gradient(circle at center, black 0%, transparent 76%)",
-
-            WebkitMaskImage:
-              "radial-gradient(circle at center, black 0%, transparent 76%)",
+            background: "var(--background, #100b25)",
           }}
         />
 
-        {/* Sol perspective */}
-        <div
-          className="absolute -bottom-[30%] left-[-20%] h-[60%] w-[140%]"
-          style={{
-            opacity: 0.1,
+        {/* ÉCLAIRAGE AMBIANT */}
+        <div className="glass3d-atmosphere" />
 
-            backgroundImage: `
-              linear-gradient(
-                to right,
-                var(--primary) 1px,
-                transparent 1px
-              ),
-              linear-gradient(
-                to bottom,
-                var(--primary) 1px,
-                transparent 1px
-              )
-            `,
+        {/* HALOS */}
+        <div className="glass3d-glow glass3d-glow-one" />
+        <div className="glass3d-glow glass3d-glow-two" />
 
-            backgroundSize:
-              "82px 82px",
+        {/* ANNEAUX */}
+        <div className="glass3d-ring glass3d-ring-one" />
+        <div className="glass3d-ring glass3d-ring-two" />
 
-            transform:
-              "perspective(760px) rotateX(66deg) scale(1.2)",
+        {/* SPHÈRES */}
+        {spheres.map((sphere) => (
+          <GlassSphere key={sphere.id} {...sphere} />
+        ))}
 
-            transformOrigin:
-              "center top",
+        {/* PETITES SPHÈRES */}
+        <div className="glass3d-small glass3d-small-one" />
+        <div className="glass3d-small glass3d-small-two" />
+        <div className="glass3d-small glass3d-small-three" />
 
-            maskImage:
-              "linear-gradient(to bottom, black, transparent 84%)",
-
-            WebkitMaskImage:
-              "linear-gradient(to bottom, black, transparent 84%)",
-          }}
-        />
+        {/* VIGNETTE */}
+        <div className="glass3d-vignette" />
       </div>
 
-      {/* =====================================================
-          3 — ORBITES
-      ====================================================== */}
-      <div
-        ref={orbitLayerRef}
-        className="absolute inset-0 transition-transform duration-500 ease-out"
-        style={{
-          willChange: "transform",
-          perspective: "1200px",
-          transformStyle:
-            "preserve-3d",
-        }}
-      >
-        {/* Grande orbite droite */}
-        <div
-          className="absolute right-[-12%] top-[3%] h-[30rem] w-[50rem] rounded-[50%] border border-primary/10"
-          style={{
-            transform:
-              "rotate(-14deg)",
-          }}
-        />
+      <style>{`
+        /* ================================================
+           BASE
+        ================================================= */
 
-        {/* Orbite centre */}
-        <div
-          className="absolute left-[5%] top-[30%] h-[25rem] w-[44rem] rounded-[50%] border border-primary/10"
-          style={{
-            transform:
-              "rotate(17deg)",
-          }}
-        />
+        .glass3d-atmosphere,
+        .glass3d-vignette {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+        }
 
-        {/* Orbite basse */}
-        <div
-          className="absolute bottom-[3%] right-[6%] h-[20rem] w-[37rem] rounded-[50%] border border-secondary/10"
-          style={{
-            transform:
-              "rotate(-23deg)",
-          }}
-        />
+        .glass3d-atmosphere {
+          background:
+            radial-gradient(
+              ellipse at 25% 28%,
+              var(--glow-primary, rgba(168,85,247,0.2)),
+              transparent 55%
+            ),
+            radial-gradient(
+              ellipse at 82% 67%,
+              var(--glow-secondary, rgba(244,114,182,0.14)),
+              transparent 54%
+            );
+          opacity: 0.55;
+        }
 
-        {/* Anneau gauche */}
-        <div
-          className="absolute left-[-5rem] top-[12%] h-56 w-56 rounded-full border border-primary/10"
-          style={{
-            transform:
-              "translateZ(-35px)",
-          }}
-        />
+        /* ================================================
+           HALOS
+        ================================================= */
 
-        {/* Anneau droit */}
-        <div
-          className="absolute right-[7%] top-[50%] h-44 w-44 rounded-full border border-primary/10"
-          style={{
-            transform:
-              "translateZ(25px)",
-          }}
-        />
+        .glass3d-glow {
+          position: absolute;
+          width: 430px;
+          height: 430px;
+          border-radius: 50%;
+          filter: blur(100px);
+          pointer-events: none;
+        }
 
-        {/* Anneau central */}
-        <div
-          className="absolute bottom-[15%] left-[34%] h-28 w-28 rounded-full border border-secondary/10"
-          style={{
-            transform:
-              "translateZ(40px)",
-          }}
-        />
-      </div>
+        .glass3d-glow-one {
+          top: 10%;
+          left: -140px;
+          background: rgba(168, 85, 247, 0.09);
+        }
 
-      {/* =====================================================
-          4 — ÉLÉMENTS AVANT
-      ====================================================== */}
-      <div
-        ref={frontLayerRef}
-        className="absolute inset-0 transition-transform duration-300 ease-out"
-        style={{
-          willChange: "transform",
-        }}
-      >
-        {/* Point 1 */}
-        <div
-          className="absolute left-[10%] top-[20%] h-2.5 w-2.5 rounded-full bg-primary/60"
-          style={{
-            boxShadow:
-              "0 0 24px var(--primary)",
-          }}
-        />
+        .glass3d-glow-two {
+          top: 28%;
+          right: -140px;
+          background: rgba(244, 114, 182, 0.07);
+        }
 
-        {/* Point 2 */}
-        <div className="absolute right-[13%] top-[16%] h-1.5 w-1.5 rounded-full bg-secondary/60" />
+        /* ================================================
+           SPHÈRES
+        ================================================= */
 
-        {/* Point 3 */}
-        <div
-          className="absolute bottom-[17%] right-[7%] h-2.5 w-2.5 rounded-full bg-primary/45"
-          style={{
-            boxShadow:
-              "0 0 20px var(--primary)",
-          }}
-        />
+        .glass3d-sphere {
+          position: absolute;
+          border-radius: 50%;
+          transform-style: preserve-3d;
+          animation-timing-function: ease-in-out;
+          animation-iteration-count: infinite;
+          animation-direction: alternate;
+          pointer-events: none;
+        }
 
-        {/* Cercle */}
-        <div className="absolute bottom-[25%] left-[5%] h-10 w-10 rounded-full border border-primary/20" />
+        .glass-position-one {
+          width: clamp(240px, 33vw, 450px);
+          height: clamp(240px, 33vw, 450px);
+          top: 7%;
+          left: -11%;
+        }
 
-        {/* Petit cercle */}
-        <div className="absolute right-[22%] top-[40%] h-6 w-6 rounded-full border border-secondary/20" />
+        .glass-position-two {
+          width: clamp(220px, 29vw, 390px);
+          height: clamp(220px, 29vw, 390px);
+          top: 12%;
+          right: -12%;
+        }
 
-        {/* Losange */}
-        <div
-          className="absolute right-[6%] top-[30%] h-9 w-9 rounded-lg border border-primary/20 bg-primary/[0.02]"
-          style={{
-            transform:
-              "rotate(45deg)",
-          }}
-        />
+        .glass-position-three {
+          width: clamp(180px, 25vw, 340px);
+          height: clamp(180px, 25vw, 340px);
+          bottom: -14%;
+          left: 28%;
+        }
 
-        {/* Petit losange */}
-        <div
-          className="absolute left-[18%] top-[58%] h-5 w-5 border border-secondary/15"
-          style={{
-            transform:
-              "rotate(45deg)",
-          }}
-        />
+        /* ================================================
+           SURFACE EN VERRE
+        ================================================= */
 
-        {/* Ligne droite */}
-        <div
-          className="absolute right-[3%] top-[38%] h-px w-52"
-          style={{
-            opacity: 0.25,
+        .glass3d-ball {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+          border-radius: 50%;
 
-            background:
-              "linear-gradient(to right, transparent, var(--primary), transparent)",
-
-            transform:
-              "rotate(-28deg)",
-          }}
-        />
-
-        {/* Ligne gauche */}
-        <div
-          className="absolute bottom-[24%] left-[7%] h-px w-40"
-          style={{
-            opacity: 0.16,
-
-            background:
-              "linear-gradient(to right, transparent, var(--secondary), transparent)",
-
-            transform:
-              "rotate(24deg)",
-          }}
-        />
-      </div>
-
-      {/* =====================================================
-          5 — LUMIÈRE CURSEUR
-      ====================================================== */}
-      <div
-        ref={cursorGlowRef}
-        className="absolute left-1/2 top-1/2 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[125px]"
-        style={{
-          opacity: 0.055,
+          border: 1px solid rgba(200, 166, 255, 0.3);
 
           background:
-            "radial-gradient(circle, var(--primary), transparent 70%)",
+            radial-gradient(
+              circle at 30% 22%,
+              rgba(255,255,255,0.21),
+              rgba(216,180,254,0.09) 20%,
+              transparent 47%
+            ),
+            radial-gradient(
+              circle at 74% 76%,
+              rgba(168,85,247,0.21),
+              transparent 61%
+            ),
+            linear-gradient(
+              145deg,
+              rgba(255,255,255,0.11),
+              rgba(168,85,247,0.07) 42%,
+              rgba(244,114,182,0.045) 78%,
+              rgba(255,255,255,0.025)
+            );
 
-          willChange: "transform",
-        }}
-      />
+          box-shadow:
+            inset 12px 15px 36px rgba(255,255,255,0.055),
+            inset -22px -28px 46px rgba(79,28,124,0.18),
+            0 22px 70px rgba(4,2,17,0.15),
+            0 0 65px rgba(168,85,247,0.06);
+        }
 
-      {/* =====================================================
-          VIGNETTE
-      ====================================================== */}
-      <div
-        className="absolute inset-0"
-        style={{
+        .glass3d-ball-violet {
+          border-color: rgba(192,132,252,0.33);
+        }
+
+        .glass3d-ball-pink {
+          border-color: rgba(244,114,182,0.28);
+
           background:
-            "radial-gradient(circle at center, transparent 42%, var(--background) 138%)",
-        }}
-      />
-    </div>
+            radial-gradient(
+              circle at 30% 24%,
+              rgba(255,255,255,0.2),
+              transparent 43%
+            ),
+            radial-gradient(
+              circle at 76% 74%,
+              rgba(244,114,182,0.22),
+              transparent 58%
+            ),
+            linear-gradient(
+              145deg,
+              rgba(244,114,182,0.09),
+              rgba(168,85,247,0.06),
+              rgba(255,255,255,0.03)
+            );
+        }
+
+        .glass3d-ball-soft {
+          opacity: 0.7;
+        }
+
+        /* ================================================
+           REFLETS
+        ================================================= */
+
+        .glass3d-highlight,
+        .glass3d-reflection,
+        .glass3d-inner-shadow,
+        .glass3d-specular {
+          position: absolute;
+          pointer-events: none;
+        }
+
+        .glass3d-highlight {
+          left: 14%;
+          top: 8%;
+          width: 66%;
+          height: 37%;
+          border-radius: 50%;
+          transform: rotate(-25deg);
+
+          background:
+            radial-gradient(
+              ellipse,
+              rgba(255,255,255,0.23),
+              rgba(255,255,255,0.055) 48%,
+              transparent 76%
+            );
+
+          filter: blur(18px);
+        }
+
+        .glass3d-reflection {
+          left: 6%;
+          top: 19%;
+          width: 18%;
+          height: 62%;
+          border-radius: 50%;
+          transform: rotate(15deg);
+          border-left: 2px solid rgba(255,255,255,0.17);
+          filter: blur(2px);
+        }
+
+        .glass3d-inner-shadow {
+          inset: 0;
+          border-radius: 50%;
+
+          box-shadow:
+            inset -18px -18px 45px rgba(168,85,247,0.13),
+            inset 9px 9px 25px rgba(255,255,255,0.05);
+        }
+
+        .glass3d-specular {
+          left: 27%;
+          top: 17%;
+          width: 24%;
+          height: 8%;
+          transform: rotate(-24deg);
+          border-radius: 50%;
+          background: rgba(255,255,255,0.27);
+          filter: blur(8px);
+        }
+
+        /* ================================================
+           ANNEAUX EN VERRE
+        ================================================= */
+
+        .glass3d-ring {
+          position: absolute;
+          border-radius: 50%;
+          border: 1px solid rgba(192,132,252,0.18);
+
+          background:
+            radial-gradient(
+              circle at 28% 20%,
+              rgba(255,255,255,0.055),
+              transparent 42%
+            );
+
+          box-shadow:
+            inset 0 0 35px rgba(168,85,247,0.05),
+            0 0 45px rgba(168,85,247,0.04);
+
+          animation:
+            glassRingDrift 30s ease-in-out infinite alternate;
+        }
+
+        .glass3d-ring-one {
+          width: clamp(280px, 37vw, 500px);
+          height: clamp(280px, 37vw, 500px);
+          left: 14%;
+          top: 24%;
+        }
+
+        .glass3d-ring-two {
+          width: clamp(240px, 32vw, 440px);
+          height: clamp(240px, 32vw, 440px);
+          right: -7%;
+          top: 43%;
+          border-color: rgba(244,114,182,0.16);
+          animation-delay: -12s;
+        }
+
+        /* ================================================
+           PETITES SPHÈRES
+        ================================================= */
+
+        .glass3d-small {
+          position: absolute;
+          width: 56px;
+          height: 56px;
+          border-radius: 50%;
+
+          border: 1px solid rgba(216,180,254,0.34);
+
+          background:
+            radial-gradient(
+              circle at 30% 25%,
+              rgba(255,255,255,0.3),
+              rgba(192,132,252,0.12) 35%,
+              rgba(168,85,247,0.05) 75%
+            );
+
+          box-shadow:
+            inset -7px -9px 17px rgba(168,85,247,0.14),
+            0 10px 32px rgba(8,4,27,0.15);
+
+          animation:
+            glassSmallFloat 20s ease-in-out infinite alternate;
+        }
+
+        .glass3d-small-one {
+          top: 13%;
+          left: 72%;
+        }
+
+        .glass3d-small-two {
+          top: 68%;
+          left: 12%;
+          width: 42px;
+          height: 42px;
+          animation-delay: -6s;
+        }
+
+        .glass3d-small-three {
+          bottom: 14%;
+          right: 19%;
+          width: 48px;
+          height: 48px;
+          animation-delay: -12s;
+        }
+
+        /* ================================================
+           VIGNETTE
+        ================================================= */
+
+        .glass3d-vignette {
+          background:
+            radial-gradient(
+              ellipse at center,
+              transparent 35%,
+              rgba(10,5,25,0.04) 82%,
+              rgba(10,5,25,0.1) 100%
+            );
+        }
+
+        /* ================================================
+           ANIMATIONS
+        ================================================= */
+
+        @keyframes glassFloatOne {
+          0% {
+            transform: translate3d(0,0,0) scale(1);
+          }
+
+          50% {
+            transform: translate3d(22px,-17px,0) scale(1.025);
+          }
+
+          100% {
+            transform: translate3d(36px,12px,0) scale(0.99);
+          }
+        }
+
+        @keyframes glassFloatTwo {
+          0% {
+            transform: translate3d(0,0,0) scale(1);
+          }
+
+          50% {
+            transform: translate3d(-24px,18px,0) scale(1.035);
+          }
+
+          100% {
+            transform: translate3d(-40px,-12px,0) scale(0.985);
+          }
+        }
+
+        @keyframes glassFloatThree {
+          0% {
+            transform: translate3d(0,0,0) scale(1);
+          }
+
+          50% {
+            transform: translate3d(16px,-25px,0) scale(1.04);
+          }
+
+          100% {
+            transform: translate3d(-12px,-38px,0) scale(0.99);
+          }
+        }
+
+        @keyframes glassRingDrift {
+          0% {
+            transform:
+              rotateX(58deg)
+              rotateZ(-18deg)
+              translate3d(0,0,0);
+          }
+
+          100% {
+            transform:
+              rotateX(62deg)
+              rotateZ(-8deg)
+              translate3d(12px,-20px,0);
+          }
+        }
+
+        @keyframes glassSmallFloat {
+          0% {
+            transform: translate3d(0,0,0);
+          }
+
+          100% {
+            transform: translate3d(12px,-28px,0);
+          }
+        }
+
+        /* ================================================
+           MODE CLAIR
+        ================================================= */
+
+        :root:not(.dark) .glass3d-ball {
+          border-color: rgba(126,34,206,0.22);
+          box-shadow:
+            inset 10px 12px 30px rgba(255,255,255,0.4),
+            inset -18px -22px 40px rgba(168,85,247,0.08),
+            0 18px 55px rgba(94,42,140,0.07);
+        }
+
+        :root:not(.dark) .glass3d-vignette {
+          opacity: 0.12;
+        }
+
+        /* ================================================
+           RESPONSIVE
+        ================================================= */
+
+        @media (max-width: 767px) {
+          .glass3d-ring {
+            opacity: 0.5;
+          }
+
+          .glass3d-small {
+            opacity: 0.55;
+          }
+
+          .glass3d-glow {
+            width: 280px;
+            height: 280px;
+          }
+        }
+
+        /* ================================================
+           ACCESSIBILITÉ
+        ================================================= */
+
+        @media (prefers-reduced-motion: reduce) {
+          .glass3d-sphere,
+          .glass3d-ring,
+          .glass3d-small {
+            animation: none !important;
+          }
+        }
+      `}</style>
+    </>
   );
 }

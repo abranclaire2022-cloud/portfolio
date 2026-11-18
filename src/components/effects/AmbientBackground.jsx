@@ -1,6 +1,8 @@
 
 "use client";
 
+import { usePathname } from "next/navigation";
+
 /* =========================================================
    LYDIA PORTFOLIO — GLASS 3D BACKGROUND
    Cyber Violet Edition
@@ -13,7 +15,8 @@
    - Compatible mode clair et sombre
    - Responsive
    - Respect des préférences de mouvement
-   - Aucune dépendance supplémentaire
+   - Taille réduite uniquement sur la page d'accueil
+   - Aucun changement du fond sur /portfolio
 ========================================================= */
 
 const spheres = [
@@ -73,13 +76,26 @@ function GlassSphere({
 ========================================================= */
 
 export default function AmbientBackground() {
+  const pathname = usePathname();
+  const isIntroPage = pathname === "/";
+
   return (
     <>
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 overflow-hidden"
+        className={`
+          pointer-events-none
+          absolute inset-0
+          overflow-hidden
+          ${
+            isIntroPage
+              ? "glass3d-intro"
+              : "glass3d-portfolio"
+          }
+        `}
       >
         {/* FOND PRINCIPAL */}
+
         <div
           className="absolute inset-0"
           style={{
@@ -88,27 +104,33 @@ export default function AmbientBackground() {
         />
 
         {/* ÉCLAIRAGE AMBIANT */}
+
         <div className="glass3d-atmosphere" />
 
         {/* HALOS */}
+
         <div className="glass3d-glow glass3d-glow-one" />
         <div className="glass3d-glow glass3d-glow-two" />
 
         {/* ANNEAUX */}
+
         <div className="glass3d-ring glass3d-ring-one" />
         <div className="glass3d-ring glass3d-ring-two" />
 
-        {/* SPHÈRES */}
+        {/* GRANDES SPHÈRES */}
+
         {spheres.map((sphere) => (
           <GlassSphere key={sphere.id} {...sphere} />
         ))}
 
         {/* PETITES SPHÈRES */}
+
         <div className="glass3d-small glass3d-small-one" />
         <div className="glass3d-small glass3d-small-two" />
         <div className="glass3d-small glass3d-small-three" />
 
         {/* VIGNETTE */}
+
         <div className="glass3d-vignette" />
       </div>
 
@@ -136,6 +158,7 @@ export default function AmbientBackground() {
               var(--glow-secondary, rgba(244,114,182,0.14)),
               transparent 54%
             );
+
           opacity: 0.55;
         }
 
@@ -165,7 +188,7 @@ export default function AmbientBackground() {
         }
 
         /* ================================================
-           SPHÈRES
+           GRANDES SPHÈRES
         ================================================= */
 
         .glass3d-sphere {
@@ -177,6 +200,8 @@ export default function AmbientBackground() {
           animation-direction: alternate;
           pointer-events: none;
         }
+
+        /* TAILLES ORIGINALES : PAGE PORTFOLIO */
 
         .glass-position-one {
           width: clamp(240px, 33vw, 450px);
@@ -197,6 +222,28 @@ export default function AmbientBackground() {
           height: clamp(180px, 25vw, 340px);
           bottom: -14%;
           left: 28%;
+        }
+
+        /* ================================================
+           TAILLES RÉDUITES : ACCUEIL UNIQUEMENT
+
+           Les dimensions sont réduites directement.
+           Les animations gardent leurs transformations.
+        ================================================= */
+
+        .glass3d-intro .glass-position-one {
+          width: clamp(150px, 23vw, 315px);
+          height: clamp(150px, 23vw, 315px);
+        }
+
+        .glass3d-intro .glass-position-two {
+          width: clamp(140px, 20vw, 273px);
+          height: clamp(140px, 20vw, 273px);
+        }
+
+        .glass3d-intro .glass-position-three {
+          width: clamp(115px, 17.5vw, 238px);
+          height: clamp(115px, 17.5vw, 238px);
         }
 
         /* ================================================
@@ -512,6 +559,7 @@ export default function AmbientBackground() {
 
         :root:not(.dark) .glass3d-ball {
           border-color: rgba(126,34,206,0.22);
+
           box-shadow:
             inset 10px 12px 30px rgba(255,255,255,0.4),
             inset -18px -22px 40px rgba(168,85,247,0.08),
@@ -538,6 +586,21 @@ export default function AmbientBackground() {
           .glass3d-glow {
             width: 280px;
             height: 280px;
+          }
+
+          .glass3d-intro .glass-position-one {
+            width: 150px;
+            height: 150px;
+          }
+
+          .glass3d-intro .glass-position-two {
+            width: 140px;
+            height: 140px;
+          }
+
+          .glass3d-intro .glass-position-three {
+            width: 115px;
+            height: 115px;
           }
         }
 

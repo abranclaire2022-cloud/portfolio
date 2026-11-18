@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -6,6 +7,17 @@ import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 import AmbientBackground from "@/components/effects/AmbientBackground";
 import portfolio from "@/data/portfolio";
+
+/* =========================================================
+   LYDIA PORTFOLIO — PAGE D'ACCUEIL
+   CYBER VIOLET + GLASS 3D
+
+   - Portrait et cercle conservés
+   - Animations conservées
+   - Cinq langues conservées
+   - Navigation vers /portfolio conservée
+   - Sphères gérées par AmbientBackground
+========================================================= */
 
 const content = {
   fr: {
@@ -52,9 +64,7 @@ const content = {
 export default function Home() {
   const { language } = useLanguage();
 
-  const t =
-    content[language] ||
-    content.fr;
+  const t = content[language] || content.fr;
 
   return (
     <main
@@ -72,7 +82,10 @@ export default function Home() {
     >
       {/* =====================================================
           FOND 3D GLOBAL
+          La taille des sphères de cette page est contrôlée
+          par AmbientBackground.jsx.
       ====================================================== */}
+
       <div
         aria-hidden="true"
         className="fixed inset-0 z-0"
@@ -81,8 +94,9 @@ export default function Home() {
       </div>
 
       {/* =====================================================
-          CONTENU
+          CONTENU PRINCIPAL
       ====================================================== */}
+
       <div
         className="
           relative
@@ -99,6 +113,7 @@ export default function Home() {
         {/* =================================================
             NOM
         ================================================== */}
+
         <p
           dir="ltr"
           className="
@@ -116,6 +131,7 @@ export default function Home() {
         {/* =================================================
             ENTRÉE CLIQUABLE
         ================================================== */}
+
         <Link
           href="/portfolio"
           aria-label={t.enter}
@@ -148,6 +164,7 @@ export default function Home() {
             {/* =================================================
                 HALO PROFOND
             ================================================== */}
+
             <div
               aria-hidden="true"
               className="
@@ -168,6 +185,7 @@ export default function Home() {
             {/* =================================================
                 ANNEAUX
             ================================================== */}
+
             <div
               aria-hidden="true"
               className="
@@ -202,8 +220,9 @@ export default function Home() {
             />
 
             {/* =================================================
-                TEXTE SUPÉRIEUR + INFÉRIEUR
+                TEXTE SUPÉRIEUR ET INFÉRIEUR
             ================================================== */}
+
             <svg
               viewBox="0 0 500 500"
               className="
@@ -220,6 +239,7 @@ export default function Home() {
             >
               <defs>
                 {/* ARC SUPÉRIEUR */}
+
                 <path
                   id="intro-top-arc"
                   d="
@@ -230,7 +250,8 @@ export default function Home() {
                   "
                 />
 
-                {/* ARC INFÉRIEUR — FULL-STACK DESCENDU */}
+                {/* ARC INFÉRIEUR */}
+
                 <path
                   id="intro-bottom-arc"
                   d="
@@ -241,7 +262,8 @@ export default function Home() {
                 />
               </defs>
 
-              {/* DÉVELOPPEUSE WEB */}
+              {/* TEXTE SUPÉRIEUR */}
+
               <text
                 fill="currentColor"
                 fontSize="20"
@@ -261,7 +283,8 @@ export default function Home() {
                 </textPath>
               </text>
 
-              {/* FULL-STACK */}
+              {/* TEXTE INFÉRIEUR */}
+
               <text
                 fill="currentColor"
                 fontSize="18"
@@ -283,8 +306,9 @@ export default function Home() {
             </svg>
 
             {/* =================================================
-                CERCLE BLEU / PHOTO
+                CERCLE ET PHOTO
             ================================================== */}
+
             <div
               className="
                 relative
@@ -307,11 +331,13 @@ export default function Home() {
                 md:w-[17rem]
               "
               style={{
-                transformStyle:
-                  "preserve-3d",
+                transformStyle: "preserve-3d",
               }}
             >
-              {/* GLOW AUTOUR DU CERCLE */}
+              {/* =================================================
+                  CONTOUR LUMINEUX
+              ================================================== */}
+
               <div
                 aria-hidden="true"
                 className="
@@ -333,8 +359,9 @@ export default function Home() {
               />
 
               {/* =================================================
-                  FOND BLEU DU SITE
+                  FOND DU PORTRAIT
               ================================================== */}
+
               <div
                 className="
                   absolute
@@ -360,6 +387,7 @@ export default function Home() {
                 }}
               >
                 {/* LUMIÈRE CENTRALE */}
+
                 <div
                   aria-hidden="true"
                   className="
@@ -376,6 +404,7 @@ export default function Home() {
                 />
 
                 {/* LUMIÈRE HAUTE */}
+
                 <div
                   aria-hidden="true"
                   className="
@@ -391,7 +420,10 @@ export default function Home() {
                   "
                 />
 
-                {/* GRILLE INTERNE */}
+                {/* =================================================
+                    GRILLE INTERNE
+                ================================================== */}
+
                 <div
                   aria-hidden="true"
                   className="
@@ -413,8 +445,7 @@ export default function Home() {
                       )
                     `,
 
-                    backgroundSize:
-                      "34px 34px",
+                    backgroundSize: "34px 34px",
 
                     maskImage:
                       "radial-gradient(circle at center, black 0%, transparent 82%)",
@@ -425,6 +456,7 @@ export default function Home() {
                 />
 
                 {/* ANNEAU INTERNE */}
+
                 <div
                   aria-hidden="true"
                   className="
@@ -439,6 +471,7 @@ export default function Home() {
                 {/* =================================================
                     PORTRAIT TRANSPARENT
                 ================================================== */}
+
                 <div
                   className="
                     absolute
@@ -448,9 +481,7 @@ export default function Home() {
                 >
                   <Image
                     src="/image/claire-portfolio-transparent.png"
-                    alt={
-                      portfolio.identity.name
-                    }
+                    alt={portfolio.identity.name}
                     fill
                     priority
                     sizes="(max-width: 640px) 240px, 285px"
@@ -469,6 +500,7 @@ export default function Home() {
                 </div>
 
                 {/* VIGNETTE BASSE */}
+
                 <div
                   aria-hidden="true"
                   className="
@@ -488,6 +520,7 @@ export default function Home() {
             {/* =================================================
                 ORBITE DÉCORATIVE
             ================================================== */}
+
             <div
               aria-hidden="true"
               className="
@@ -498,7 +531,8 @@ export default function Home() {
                 rounded-full
               "
             >
-              {/* POINT BLEU */}
+              {/* POINT LUMINEUX */}
+
               <span
                 className="
                   absolute
@@ -513,6 +547,7 @@ export default function Home() {
               />
 
               {/* PETIT ANNEAU */}
+
               <span
                 className="
                   absolute
@@ -527,7 +562,10 @@ export default function Home() {
               />
             </div>
 
-            {/* LOSANGE */}
+            {/* =================================================
+                LOSANGE DÉCORATIF
+            ================================================== */}
+
             <div
               aria-hidden="true"
               className="
@@ -554,8 +592,9 @@ export default function Home() {
         </Link>
 
         {/* =================================================
-            MESSAGE
+            MESSAGE D'ACCUEIL
         ================================================== */}
+
         <div
           className="
             relative
@@ -588,6 +627,7 @@ export default function Home() {
           </p>
 
           {/* INDICATEUR */}
+
           <div
             aria-hidden="true"
             className="

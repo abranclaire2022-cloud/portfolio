@@ -9,15 +9,14 @@ import portfolio from "@/data/portfolio";
 
 /* =========================================================
    LYDIA PORTFOLIO — CYBER VIOLET
-   HERO — FINAL LAYOUT ADJUSTMENTS
+   HERO — RESPONSIVE PORTRAIT
 
-   - Texte mieux espacé
-   - Portrait rapproché de la colonne de gauche
-   - Taille du portrait inchangée
+   - Mise en page desktop conservée
+   - Portrait désormais visible sur mobile
+   - Taille de la scène adaptée aux petits écrans
    - Effets 3D et animations conservés
-   - Boutons visibles plus rapidement
-   - Informations secondaires simplifiées
-   - Cinq langues et RTL
+   - Boutons et liens conservés
+   - Cinq langues et RTL conservés
 ========================================================= */
 
 const content = {
@@ -296,14 +295,7 @@ export default function Hero() {
         "
       />
 
-      {/* ===================================================
-          GRILLE PRINCIPALE
-
-          Deux colonnes sur desktop.
-          Espacements harmonisés pour garder
-          les actions accessibles.
-      ==================================================== */}
-
+      {/* GRILLE PRINCIPALE */}
       <div
         className="
           relative z-10 mx-auto
@@ -318,10 +310,7 @@ export default function Hero() {
           lg:py-8
         "
       >
-        {/* =================================================
-            COLONNE GAUCHE — PRÉSENTATION
-        ================================================== */}
-
+        {/* COLONNE GAUCHE — PRÉSENTATION */}
         <div
           className={`
             min-w-0 max-w-[760px]
@@ -468,10 +457,7 @@ export default function Hero() {
             </div>
           )}
 
-          {/* =================================================
-              ACTIONS PRINCIPALES
-          ================================================== */}
-
+          {/* ACTIONS PRINCIPALES */}
           <div
             className="
               mt-5 flex flex-col gap-3
@@ -581,13 +567,7 @@ export default function Hero() {
             )}
           </div>
 
-          {/* =================================================
-              INFORMATION COMPLÉMENTAIRE
-
-              La répétition de React, Next.js et
-              Laravel a été supprimée.
-          ================================================== */}
-
+          {/* LOCALISATION */}
           {location && (
             <div
               className="
@@ -629,14 +609,17 @@ export default function Hero() {
         {/* =================================================
             COLONNE DROITE — PORTRAIT 3D
 
-            Taille inchangée : 24rem.
-            Décalage de 24px vers la colonne texte.
+            CORRECTION MOBILE :
+            - Le portrait n'est plus masqué.
+            - La scène s'adapte aux petits écrans.
+            - La taille desktop reste de 24rem.
         ================================================== */}
 
         <div
           className={`
-            hidden items-center justify-center
-            lg:flex
+            flex items-center justify-center
+            mt-6 mb-4
+            lg:mt-0 lg:mb-0
 
             ${
               isRTL
@@ -645,9 +628,7 @@ export default function Hero() {
             }
           `}
         >
-          {/* Conteneur de positionnement :
-              déplacer celui-ci ne perturbe pas
-              les transformations 3D de la scène. */}
+          {/* POSITIONNEMENT DE LA SCÈNE */}
           <div
             className={
               isRTL
@@ -662,7 +643,9 @@ export default function Hero() {
               onPointerCancel={resetScene}
               className="
                 relative flex
-                h-[24rem] w-[24rem]
+                h-[19rem] w-[19rem]
+                sm:h-[22rem] sm:w-[22rem]
+                lg:h-[24rem] lg:w-[24rem]
                 items-center justify-center
 
                 transition-transform
